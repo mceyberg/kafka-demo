@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Producer [dev]" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.optum.clm.producer.ProducerApplication" />
+    <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/producer" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <module name="producer_main" />
+    <envs />
+    <method />
+  </configuration>
+</component>

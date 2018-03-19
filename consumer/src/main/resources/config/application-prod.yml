@@ -1,0 +1,14 @@
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: https://kafka.optum.com:9092
+
+server:
+  port: 8082
+
+logging:
+  file: logs/consumer.log
+
+producer:
+  root:
+    uri: http://localhost:8080

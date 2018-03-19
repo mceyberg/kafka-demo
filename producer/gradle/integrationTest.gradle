@@ -1,0 +1,10 @@
+
+apply plugin: 'org.unbroken-dome.test-sets'
+
+testSets {
+	integrationTest { dirName = 'integration-test' }
+}
+
+
+check.dependsOn integrationTest
+integrationTest.mustRunAfter test

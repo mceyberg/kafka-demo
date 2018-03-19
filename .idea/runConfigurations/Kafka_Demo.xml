@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Kafka Demo" type="Multirun" factoryName="Multirun" singleton="true" separateTabs="true" startOneByOne="true" markFailedProcess="true" hideSuccessProcess="false" delayTime="0">
+    <runConfiguration name="Producer [dev]" type="Spring Boot" />
+    <runConfiguration name="Consumer [dev]" type="Spring Boot" />
+    <method />
+  </configuration>
+</component>

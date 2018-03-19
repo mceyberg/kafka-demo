@@ -1,0 +1,35 @@
+
+apply plugin: 'org.liquibase.gradle'
+
+buildscript {
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		classpath 'org.liquibase:liquibase-core:3.4.1'
+		classpath "org.liquibase:liquibase-gradle-plugin:1.1.1"
+		classpath 'org.postgresql:postgresql:42.2.1'
+	}
+
+}
+
+def changeLog = "$projectDir/src/main/resources/db/liquibase-changelog.xml"
+
+task('dev') {
+	doLast {
+		println "executing dev"
+
+		liquibase {
+			activities {
+				main {
+					changeLogFile changeLog
+					url 'jdbc:postgresql://localhost:5432/kafkademo'
+					username 'demouser'
+					password 'password1'
+				}
+			}
+		}
+	}
+}

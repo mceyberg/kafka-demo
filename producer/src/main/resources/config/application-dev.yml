@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:kafkadb
+    username: sa
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      path: /h2
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+# Disable feature detection by this undocumented parameter.
+# Check the org.hibernate.engine.jdbc.internal.JdbcServiceImpl.configure method for more details.
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+
+logging:
+  file: logs/producer.log

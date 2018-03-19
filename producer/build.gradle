@@ -1,0 +1,92 @@
+
+buildscript {
+	ext {
+		springBootVersion = '2.0.0.RELEASE'
+	}
+	repositories {
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+	dependencies {
+		classpath(
+			"org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}",
+			"gradle.plugin.org.unbroken-dome.gradle-plugins:gradle-testsets-plugin:1.4.2",
+			'org.liquibase:liquibase-gradle-plugin:1.2.4'
+		)
+	}
+}
+
+repositories {
+	mavenCentral()
+	jcenter()
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+apply from: 'gradle/integrationTest.gradle'
+apply from: 'gradle/sourceJars.gradle'
+apply from: 'gradle/liquibase.gradle'
+
+// Stubs
+apply from: 'gradle/release.gradle'
+apply from: 'gradle/docker.gradle'
+
+version "${version}"
+sourceCompatibility = 1.8
+
+dependencies {
+
+	compile(
+		// Spring boot dependencies
+		'org.springframework.boot:spring-boot-configuration-processor',
+		'org.springframework.boot:spring-boot-starter-actuator',
+		'org.springframework.boot:spring-boot-starter-logging',
+		'org.springframework.boot:spring-boot-starter-web',
+
+		// Provides one-stop-shop basic auth integration with our web service. There are additional libraries
+		// to provide OAuth2 security if we wish.
+//		'org.springframework.boot:spring-boot-starter-security',
+
+		// Spring dependencies
+		'org.springframework.kafka:spring-kafka',
+
+		'org.hibernate:hibernate-java8',
+
+		// Other dependencies
+		'com.google.guava:guava:24.0-jre',
+		'org.apache.commons:commons-collections4:4.1',
+
+		'org.liquibase:liquibase-core',
+	)
+
+	compile('org.springframework.boot:spring-boot-starter-data-jpa') {
+		exclude group: 'org.hibernate', module: 'hibernate-core'
+	}
+
+	runtime(
+		'org.springframework.boot:spring-boot-devtools',
+
+		// Database libraries
+		'org.postgresql:postgresql',
+		'com.h2database:h2',
+	)
+
+	compileOnly(
+		'org.projectlombok:lombok'
+	)
+
+	testImplementation(
+		'org.unbroken-dome.embedded-kafka:embedded-kafka-core:1.0.0',
+		'org.unbroken-dome.embedded-kafka:embedded-kafka-reactor:1.0.0',
+		'org.unbroken-dome.embedded-kafka:embedded-kafka-spring:1.0.0'
+	)
+
+	testCompile(
+		'org.springframework.boot:spring-boot-starter-test',
+		'org.springframework.security:spring-security-test',
+
+		'org.spockframework:spock-core:1.1-groovy-2.4-rc-2'
+	)
+}

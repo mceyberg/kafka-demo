@@ -1,0 +1,4 @@
+
+logging:
+  file: /var/log/kafkaDemo/producer.log
+
