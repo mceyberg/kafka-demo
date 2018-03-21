@@ -42,6 +42,7 @@ dependencies {
 		// Spring boot dependencies
 		'org.springframework.boot:spring-boot-configuration-processor',
 		'org.springframework.boot:spring-boot-starter-actuator',
+		'org.springframework.boot:spring-boot-starter-hateoas',
 		'org.springframework.boot:spring-boot-starter-logging',
 		'org.springframework.boot:spring-boot-starter-web',
 

@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.optum.clm.producer.model.Employee;
+import com.optum.clm.producer.model.Organization;
 
 public interface EmployeeService {
 
@@ -16,4 +17,6 @@ public interface EmployeeService {
 	void save(Employee employee);
 
 	void delete(Employee employee);
+
+	Page<Employee> findByOrganization(Pageable pageable, Organization organization);
 }

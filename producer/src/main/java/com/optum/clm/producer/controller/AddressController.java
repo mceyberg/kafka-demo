@@ -4,8 +4,10 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,12 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.optum.clm.producer.model.Address;
 import com.optum.clm.producer.service.AddressService;
+import com.optum.clm.producer.hateoas.AddressResource;
 
 @RestController
 @RequestMapping("/addresses")
@@ -32,20 +34,19 @@ public class AddressController {
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public Page<Address> findAllAddresses(@RequestParam(defaultValue = "0") Integer page,
-										  @RequestParam(defaultValue = "20") Integer size,
-										  @RequestParam(defaultValue = "ASC") Sort.Direction direction,
-										  @RequestParam(defaultValue = "id") String... sortBy) {
+	public PagedResources<Resource<AddressResource>> findAllAddresses(Pageable pageable,
+																	  PagedResourcesAssembler<AddressResource> assembler) {
 
-		PageRequest pageRequest = PageRequest.of(page, size, direction, sortBy);
-		return addressService.findAll(pageRequest);
+		Page<Address> page = addressService.findAll(pageable);
+
+		return assembler.toResource(page.map(AddressResource::new));
 	}
 
 	@GetMapping(value = "/{addressId}",
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public Address findAddressById(@PathVariable Long addressId) {
-		return addressService.findById(addressId);
+	public AddressResource findAddressById(@PathVariable Long addressId) {
+		return new AddressResource(addressService.findById(addressId));
 	}
 
 	@PutMapping(value = "/{addressId}",

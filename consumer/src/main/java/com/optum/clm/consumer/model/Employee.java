@@ -10,6 +10,4 @@ public class Employee extends Model {
 	private String firstName;
 
 	private String lastName;
-
-	private Address address;
 }

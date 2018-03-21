@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.optum.clm.producer.exception.NotFoundException;
 import com.optum.clm.producer.model.Employee;
+import com.optum.clm.producer.model.Organization;
 import com.optum.clm.producer.repository.EmployeeRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -52,5 +53,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		employeeRepository.delete(employee);
 		notificationService.sendMessage(TOPIC_EMPLOYEE_DELETED, "id", employee.getId().toString());
+	}
+
+	@Override
+	public Page<Employee> findByOrganization(Pageable pageable, Organization organization) {
+		return employeeRepository.findByOrganization(pageable, organization);
 	}
 }
