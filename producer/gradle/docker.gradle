@@ -1,3 +1,21 @@
-/*
- * Stub for generating Docker containers via Gradle
- */
+apply plugin: 'com.palantir.docker'
+
+docker {
+	name "docker.optum.com/clm_devops/$jar.baseName:$version"
+	tags 'latest'
+	files jar.archivePath
+}
+
+dockerPrepare {
+	doLast {
+		copy {
+			from('src/main/docker') {
+				include "*"
+				filter { line -> line.replace'$JAR_FILE', jar.archiveName }
+			}
+			into 'build/docker'
+		}
+	}
+}
+
+tasks.build.dependsOn tasks.dockerPrepare

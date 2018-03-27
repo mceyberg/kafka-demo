@@ -12,6 +12,7 @@ buildscript {
 		classpath(
 			"org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}",
 			"gradle.plugin.org.unbroken-dome.gradle-plugins:gradle-testsets-plugin:1.4.2",
+			'gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.19.2',
 			'org.liquibase:liquibase-gradle-plugin:1.2.4'
 		)
 	}
@@ -27,11 +28,10 @@ apply plugin: 'io.spring.dependency-management'
 
 apply from: 'gradle/integrationTest.gradle'
 apply from: 'gradle/sourceJars.gradle'
+apply from: 'gradle/docker.gradle'
 apply from: 'gradle/liquibase.gradle'
 
-// Stubs
 apply from: 'gradle/release.gradle'
-apply from: 'gradle/docker.gradle'
 
 version "${version}"
 sourceCompatibility = 1.8
