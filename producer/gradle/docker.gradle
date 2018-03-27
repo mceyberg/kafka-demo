@@ -19,3 +19,4 @@ dockerPrepare {
 }
 
 tasks.build.dependsOn tasks.dockerPrepare
+tasks.docker.dependsOn tasks.build
