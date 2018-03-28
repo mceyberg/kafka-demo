@@ -1,22 +1,39 @@
 apply plugin: 'com.palantir.docker'
 
+// Some base plugin configurations
 docker {
+	// Set the name of the docker image we're creating
 	name "docker.optum.com/clm_devops/$jar.baseName:$version"
+
+	// Haven't actually figured out how to get this to work... Supposed to tag our image as 'latest' in addition
+	// to its existing tag.
 	tags 'latest'
+
+	// Include the jar file in our Docker build. Don't include files in src/main/docker yet - that will get added
+	// separately in the prepare phase, so we can execute some string token replacements.
 	files jar.archivePath
 }
 
+// Override the palantir plugin's 'dockerPrepare' task to include a copy task that replaces occurrences of the string
+// $JAR_FILE with the artifact name. This allows us to have a custom-built Dockerfile that corresponds to the
+// application jar out-of-the-box.
 dockerPrepare {
 	doLast {
 		copy {
 			from('src/main/docker') {
-				include "*"
-				filter { line -> line.replace'$JAR_FILE', jar.archiveName }
+				include '*'
+
+				// Replace occurrences of the token $JAR_FILE with the actual file name, which changes from version
+				// to version.
+				filter { line -> line.replace '$JAR_FILE', jar.archiveName }
 			}
 			into 'build/docker'
 		}
 	}
 }
 
+// dockerPrepare requires that we have our bootable artifact built
+tasks.dockerPrepare.dependsOn tasks.bootJar
+
+// Build the Dockerfile docker-entrypoint.sh files during the standard build
 tasks.build.dependsOn tasks.dockerPrepare
-tasks.docker.dependsOn tasks.build
