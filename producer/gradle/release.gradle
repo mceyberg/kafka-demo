@@ -1,3 +1,10 @@
-/*
- * Stub for managing releases via Gradle
- */
+apply plugin: 'net.researchgate.release'
+
+// For a list of properties and what they do, visit https://github.com/researchgate/gradle-release
+release {
+	failOnUnversionedFiles = false
+
+	git {
+		commitVersionFileOnly = true
+	}
+}

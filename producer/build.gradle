@@ -10,10 +10,11 @@ buildscript {
 	}
 	dependencies {
 		classpath(
-			"org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}",
-			"gradle.plugin.org.unbroken-dome.gradle-plugins:gradle-testsets-plugin:1.4.2",
 			'gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.19.2',
-			'org.liquibase:liquibase-gradle-plugin:1.2.4'
+			"gradle.plugin.org.unbroken-dome.gradle-plugins:gradle-testsets-plugin:1.4.2",
+			'net.researchgate:gradle-release:2.6.0',
+			'org.liquibase:liquibase-gradle-plugin:1.2.4',
+			"org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion",
 		)
 	}
 }
@@ -31,6 +32,7 @@ apply from: 'gradle/sourceJars.gradle'
 apply from: 'gradle/docker.gradle'
 apply from: 'gradle/liquibase.gradle'
 
+// release plugin must be applied after sourceJars plugin to make sure source jars are included in the upload
 apply from: 'gradle/release.gradle'
 
 version "${version}"
