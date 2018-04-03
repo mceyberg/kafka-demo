@@ -28,8 +28,12 @@ import com.optum.clm.producer.employee.model.EmployeeResource;
 @RequestMapping("/employees")
 public class EmployeeController {
 
+	private final EmployeeService employeeService;
+
 	@Autowired
-	private EmployeeService employeeService;
+	public EmployeeController(EmployeeService employeeService) {
+		this.employeeService = employeeService;
+	}
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)

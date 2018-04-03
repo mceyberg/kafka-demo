@@ -29,10 +29,14 @@ public class KafkaProducerHealthEndpoint {
 	@Value("${spring.kafka.producer.bootstrap-servers}")
 	private String bootstrapAddress;
 
-	@Autowired
-	private HealthEndpoint delegate;
+	private final HealthEndpoint delegate;
 
 	private SocketAddress socketAddress;
+
+	@Autowired
+	public KafkaProducerHealthEndpoint(HealthEndpoint delegate) {
+		this.delegate = delegate;
+	}
 
 	@PostConstruct
 	public void init() {

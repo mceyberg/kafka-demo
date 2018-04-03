@@ -19,12 +19,14 @@ public class AddressServiceImpl implements AddressService {
 	private static final String TOPIC_ADDRESS_CHANGED = "address-changed";
 	private static final String TOPIC_ADDRESS_DELETED = "address-deleted";
 
+	private final AddressRepository addressRepository;
+	private final NotificationService notificationService;
 
 	@Autowired
-	private AddressRepository addressRepository;
-
-	@Autowired
-	private NotificationService notificationService;
+	public AddressServiceImpl(AddressRepository addressRepository, NotificationService notificationService) {
+		this.addressRepository = addressRepository;
+		this.notificationService = notificationService;
+	}
 
 	@Override
 	public Address findById(Long addressId) {

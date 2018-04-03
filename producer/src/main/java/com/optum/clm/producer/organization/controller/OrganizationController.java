@@ -35,14 +35,18 @@ import lombok.Data;
 @RequestMapping("/organizations")
 public class OrganizationController {
 
-	@Autowired
-	private OrganizationService organizationService;
+	private final OrganizationService organizationService;
+	private final EmployeeService employeeService;
+	private final AddressService addressService;
 
 	@Autowired
-	private EmployeeService employeeService;
-
-	@Autowired
-	private AddressService addressService;
+	public OrganizationController(OrganizationService organizationService,
+								  EmployeeService employeeService,
+								  AddressService addressService) {
+		this.organizationService = organizationService;
+		this.employeeService = employeeService;
+		this.addressService = addressService;
+	}
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)

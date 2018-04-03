@@ -29,8 +29,12 @@ import com.optum.clm.producer.address.model.AddressResource;
 public class AddressController {
 
 
+	private final AddressService addressService;
+
 	@Autowired
-	private AddressService addressService;
+	public AddressController(AddressService addressService) {
+		this.addressService = addressService;
+	}
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)

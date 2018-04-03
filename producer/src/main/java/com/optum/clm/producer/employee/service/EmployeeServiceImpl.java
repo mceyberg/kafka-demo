@@ -20,11 +20,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private static final String TOPIC_EMPLOYEE_CHANGED = "employee-changed";
 	private static final String TOPIC_EMPLOYEE_DELETED = "employee-deleted";
 
-	@Autowired
-	private EmployeeRepository employeeRepository;
+	private final EmployeeRepository employeeRepository;
+	private final NotificationService notificationService;
 
 	@Autowired
-	private NotificationService notificationService;
+	public EmployeeServiceImpl(EmployeeRepository employeeRepository, NotificationService notificationService) {
+		this.employeeRepository = employeeRepository;
+		this.notificationService = notificationService;
+	}
 
 	@Override
 	public Employee findById(Long employeeId) {

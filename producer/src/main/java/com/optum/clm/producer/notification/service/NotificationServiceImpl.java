@@ -12,8 +12,12 @@ import org.springframework.util.concurrent.ListenableFuture;
 @Service
 public class NotificationServiceImpl implements NotificationService {
 
+	private final KafkaTemplate<String, String> kafkaTemplate;
+
 	@Autowired
-	private KafkaTemplate<String, String> kafkaTemplate;
+	public NotificationServiceImpl(KafkaTemplate<String, String> kafkaTemplate) {
+		this.kafkaTemplate = kafkaTemplate;
+	}
 
 	@Async
 	@Override

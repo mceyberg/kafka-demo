@@ -19,11 +19,15 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private static final String TOPIC_ORGANIZATION_CHANGED = "organization-changed";
 	private static final String TOPIC_ORGANIZATION_DELETED = "organization-deleted";
 
-	@Autowired
-	private OrganizationRepository organizationRepository;
+	private final OrganizationRepository organizationRepository;
+	private final NotificationService notificationService;
 
 	@Autowired
-	private NotificationService notificationService;
+	public OrganizationServiceImpl(OrganizationRepository organizationRepository,
+								   NotificationService notificationService) {
+		this.organizationRepository = organizationRepository;
+		this.notificationService = notificationService;
+	}
 
 	@Override
 	public Organization findById(Long organizationId) {
