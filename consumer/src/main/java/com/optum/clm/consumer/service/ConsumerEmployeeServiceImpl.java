@@ -15,8 +15,12 @@ public class ConsumerEmployeeServiceImpl implements ConsumerEmployeeService {
 
 	private static final String FIND_EMPLOYEE_BY_ID_ENDPOINT = "/employees/{employeeId}";
 
+	private final RestTemplate producerRestTemplate;
+
 	@Autowired
-	private RestTemplate producerRestTemplate;
+	public ConsumerEmployeeServiceImpl(RestTemplate producerRestTemplate) {
+		this.producerRestTemplate = producerRestTemplate;
+	}
 
 	@Override
 	public void employeeChanged(@Payload String msg) {

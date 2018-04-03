@@ -15,8 +15,12 @@ public class ConsumerAddressServiceImpl implements ConsumerAddressService {
 
 	private static final String FIND_ADDRESS_BY_ID_ENDPOINT = "/addresses/{addressId}";
 
+	private final RestTemplate producerRestTemplate;
+
 	@Autowired
-	private RestTemplate producerRestTemplate;
+	public ConsumerAddressServiceImpl(RestTemplate producerRestTemplate) {
+		this.producerRestTemplate = producerRestTemplate;
+	}
 
 	@Override
 	public void addressChanged(@Payload String msg) {

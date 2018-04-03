@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "producer.root.uri",
+      "type": "java.lang.String",
+      "description": "Root URI for producer service."
+    }
+  ]
+}
